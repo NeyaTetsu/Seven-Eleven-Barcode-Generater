@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SEVEN-ELEVEN BARCODE GENERATER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>セブン-イレブン 払込バーコード連続生成ツール</h1>
+
+    <textarea id="inputText" rows="8" cols="24" placeholder="払込番号を入力 &#13;※改行で複数入力が可能"></textarea>
+    <br>
+    <button onclick="createBarcode()">バーコードを生成</button>
+
+    <div id="tableContainer"></div>
+
+    <h2>ご利用方法</h2>
+    <p>1.払込番号を入力<br>※空白とハイフンは自動で削除されます<br>※改行で区切ることで複数のバーコードを同時生成できます</p>
+    <p>2.バーコードを生成をタップ</p>
+    <p>3.生成されたバーコードをセブン-イレブン店頭レジで提示<br>※メモ欄はご自由にお使いください（生成されたバーコードに影響はありません）</p>
+    
+    <h2>ご注意</h2>
+    <p>※スクリーンショットで保存することをおすすめします。</p>
+    <p>※非公式ツールの為、正常に利用できない場合がございます。</p>
+    <p>※バーコードを読み取れない場合は、バーコード下部の番号を店員にお伝えください。</p>
+
+    <script src="script.js"></script>
+</body>
+</html>

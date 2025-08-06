@@ -1,0 +1,37 @@
+table {
+    border-collapse: collapse;
+    margin-top: 10px;
+    text-align: center;
+}
+td {
+    border: 1px solid #000;
+    padding: 8px;
+}
+td > img {
+    width: 245px;
+}
+td > label {
+    font-size: .8em;
+}
+td > input {
+    font-size: 1.2em;
+}
+@media screen and ( max-width: 768px ) {
+    h1 {
+        font-size: 1em;
+    }
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 2em;
+    }
+    button {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 1.5em;
+    }
+    table {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
