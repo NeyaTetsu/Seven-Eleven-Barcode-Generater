@@ -12,7 +12,7 @@ function createBarcode() {
         let tableHtml;
         if(barcodeNumber.length === 13){
             let barcodeImage = `<img src="https://inticket.sej.co.jp/order/barcode?Code=${barcodeNumber}" alt="${barcodeNumber}">`;
-            tableHtml = `${barcodeImage}<p>${barcodeNumber}</p><input type="text" name="note" placeholder="メモ"><input type="checkbox" id="check${barcodeNumber}"><label for="check${barcodeNumber}">バーコード読込済</label>`;
+            tableHtml = `${barcodeImage}<p>${barcodeNumber}</p><input type="text" name="note" placeholder="メモ"><input type="checkbox" id="check${barcodeNumber}"><label for="check${barcodeNumber}">使用済み</label>`;
         }else{
             tableHtml = "<p>払込番号は13桁です！</p>";
         }
