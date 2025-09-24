@@ -57,7 +57,7 @@ td > input[type="text"]:focus {
     box-shadow: 0 0 1rem #9aa;
 }
 td > input[type="checkbox"] {
-    accent-color: #8ff;
+    accent-color: #aee;
     transform: scale(1.5);
     outline: none;
 }
@@ -67,8 +67,8 @@ td > label {
 
 textarea {
     display: block;
-    resize: vertical;
     width: 100%;
+    resize: none;
     box-sizing: border-box;
     font-size: 2em;
     padding: 1.5rem;
@@ -80,6 +80,9 @@ textarea {
 }
 textarea:focus {
     box-shadow: 0 0 1rem #9aa;
+}
+textarea#inputText {
+    resize: vertical;
 }
 button {
     width: 100%;

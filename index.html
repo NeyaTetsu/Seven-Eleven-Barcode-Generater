@@ -11,7 +11,7 @@
 
     <div class="block notice nonView" id="noticeContainer">
         <h2>お店の方へ</h2>
-        <p>バーコードを読み取れない場合は、バーコード下部の13桁の数字をご入力願います。</p>
+        <p>お仕事お疲れ様です。<br>バーコードを読み取れない場合は、バーコード下部の13桁の数字をご入力願います。</p>
     </div>
 
     <div class="split"></div>
@@ -21,6 +21,14 @@
     <div class="inputarea">
         <textarea id="inputText" rows="8" placeholder="払込番号を入力 &#13;※改行で複数入力が可能"></textarea>
         <button onclick="createBarcode()">バーコードを生成</button>
+    </div>
+    <div class="inputarea">
+        <textarea id="shareURL" rows="1" placeholder="共有用URL" readonly></textarea>
+        <button onclick="copyURL()">URLをコピー</button>
+    </div>
+    <div class="inputarea">
+        <textarea id="savedData" rows="1" placeholder="保存データはありません" readonly></textarea>
+        <button onclick="clearLocalStrg()">保存データを消去</button>
     </div>
     <div class="block">
         <h2>ご利用方法</h2>
@@ -33,7 +41,7 @@
     <div class="block">
         <h2>ご注意</h2>
         <ul type="square">
-            <li>保存機能はありません。<br>※将来的な実装も計画していますが、実装時期は未定です<br>※保存の際は、端末のスクリーンショット機能をご利用ください</li>
+            <li>メモの保存機能はありません。<br>※将来的な実装も計画していますが、実装時期は未定です</li>
             <li>非公式ツールの為、正常に利用できない場合がございます。</li>
             <li>バーコードを読み取れない場合は、バーコード下部の番号を従業員にお伝えください。</li>
         </ul>
