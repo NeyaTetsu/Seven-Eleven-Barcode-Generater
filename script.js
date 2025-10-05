@@ -1,14 +1,27 @@
+//グローバル変数宣言
+const url = new URL(window.location.href);
+let barcodeNumbers = []; //Array
+let barcodeCount = 0; //Number
+
 (function (){
-    let barcodeNumbers;
-    barcodeNumbers = getLocalStrg("barcodeNumbers");
-    barcodeNumbers = getUrlParam("barcodeNumbers");
-    if(barcodeNumbers){
-        let barcodeNumbersInputText = "";
-        for(let i = 0; i < barcodeNumbers.length; i++){
-            barcodeNumbersInputText = barcodeNumbersInputText.concat(`${barcodeNumbers[i]}\n`);
-        }
-        document.getElementById("inputText").value = barcodeNumbersInputText;
+    const urlParam = getUrlParam("barcodeNumbers");
+    const localStrg = getLocalStrg("barcodeNumbers");
+    if(urlParam){
+        barcodeNumbers = urlParam;
     }
+    if(localStrg){
+        if(!barcodeNumbers || confirm("「OK」を押すと、端末内に保存されたデータが上書きされます。よろしいですか？\n端末内のデータを保持したい場合は「キャンセル」を押してください！")){ 
+            barcodeNumbers = localStrg;
+        }
+    }
+    if(!barcodeNumbers){
+        return false;
+    }
+    let barcodeNumbersInputText = "";
+    for(let i = 0; i < barcodeNumbers.length; i++){
+        barcodeNumbersInputText = barcodeNumbersInputText.concat(`${barcodeNumbers[i]}\n`);
+    }
+    document.getElementById("inputText").value = barcodeNumbersInputText;
 }());
 
 function createBarcode(){
@@ -16,33 +29,78 @@ function createBarcode(){
     if (text.length == 0){
         return false;
     }
+    const barcodeNotes = getNotes();
+
     const lines = text.split(/\r?\n/).filter(line => line.trim() !== "");
 
     let html = '<table><tbody>';
-
-    let barcodeNumbers = [];
+    barcodeNumbers = [];
+    barcodeCount = 0;
 
     lines.forEach((line, i) => {
         let barcodeNumber = convertFormat(line);
         barcodeNumbers.push(barcodeNumber);
+        let barcodeNote = "";
+        if(barcodeNotes[i]){
+            barcodeNote = barcodeNotes[i];
+        }
         let tableHtml;
         if(barcodeNumber.length === 13){
             let barcodeImage = `<img src="https://inticket.sej.co.jp/order/barcode?Code=${barcodeNumber}" alt="${barcodeNumber}">`;
-            tableHtml = `${barcodeImage}<p>${barcodeNumber}</p><input type="text" id="note${i}" placeholder="メモ"><input type="checkbox" id="check${i}"><label for="check${i}">使用済み</label>`;
+            tableHtml = `${barcodeImage}<p>${barcodeNumber}</p><input type="text" id="note${i}" placeholder="メモ" value="${barcodeNote}"><input type="checkbox" id="check${i}"><label for="check${i}">使用済み</label>`;
         }else{
             tableHtml = "<p>払込番号は13桁です！</p>";
         }
         html += `<tr><td>${tableHtml}</td></tr>`;
+        barcodeCount++;
     });
 
-    html += '</tbody></table><div class="split"></div>';
+    html += '</tbody></table>';
 
     document.getElementById("tableContainer").innerHTML = html;
-    
+
+    showOptionContainer();
+
+    history.replaceState(null, '', url.pathname);
+
     saveLocalStrg("barcodeNumbers", barcodeNumbers);
     localStrgStatus(true);
     saveUrlParam("barcodeNumbers", barcodeNumbers);
+    if(barcodeNotes){
+        saveUrlParam("barcodeNotes", barcodeNotes);
+    }
 }
+
+function showOptionContainer(){
+    const optionContainer = document.getElementById("optionContainer");
+    optionContainer.classList.remove("hide");
+}
+
+function saveNotes(){
+    let barcodeNotes = [];
+    for(let i = 0; i < barcodeCount; i++){
+        const barcodeNote = document.getElementById(`note${i}`).value;
+        barcodeNotes.push(barcodeNote);
+    }
+    saveLocalStrg("barcodeNumbers", barcodeNumbers);
+    saveLocalStrg("barcodeNotes", barcodeNotes);
+    localStrgStatus(true);
+    saveUrlParam("barcodeNotes", barcodeNotes);
+    alert("メモデータを保存しました\n※保存機能は開発途上です。データが吹き飛ぶ可能性をご理解のうえ、ご利用ください。");
+}
+
+function getNotes(){
+    const urlParam = getUrlParam("barcodeNotes");
+    const localStrg = getLocalStrg("barcodeNotes");
+    if(urlParam){
+        return localStrg;
+    }else if(localStrg){
+        return urlParam;
+    }else{
+        return false;
+    }
+}
+
 
 function copyURL(){
     if (!navigator.clipboard) {
@@ -75,18 +133,23 @@ function convertNumberOnly(str){
 
 //ローカルストレージ管理
 function saveLocalStrg(key, data){
+    localStorage.removeItem(key);
     localStorage.setItem(key, JSON.stringify(data));
 }
 function getLocalStrg(key){
     let data = localStorage.getItem(key);
     if(data){
         localStrgStatus(true);
+        return JSON.parse(data);
+    }else{
+        return false;
     }
-    return JSON.parse(data);
 }
 function clearLocalStrg(){
-    localStorage.clear();
-    localStrgStatus(false);
+    if(confirm("削除したデータは戻せません！\n本当に削除してよろしいですか？")){
+        localStorage.clear();
+        localStrgStatus(false);
+    }
 }
 
 //ローカルストレージ情報を表示
@@ -101,12 +164,15 @@ function localStrgStatus(bool){
 
 //URL
 function saveUrlParam(key, data){
-    const url = new URL(window.location.href);
+    url.searchParams.delete(key);
     url.searchParams.set(key, JSON.stringify(data));
     document.getElementById("shareURL").value = url.toString();
 }
 function getUrlParam(key){
-    const url = new URL(window.location.href);
     let data = url.searchParams.get(key);
-    return JSON.parse(data);
+    if(data){
+        return JSON.parse(data);
+    }else{
+        return false;
+    }
 }

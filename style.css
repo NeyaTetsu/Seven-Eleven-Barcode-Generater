@@ -96,6 +96,9 @@ button {
     border-bottom-right-radius: 1rem;
     color: #133;
     font-weight: bolder;
+    &#saveNotes {
+        border-radius: 1rem;
+    }
 }
 
 ol,ul {
@@ -104,6 +107,13 @@ ol,ul {
 }
 li,p {
     margin: .25em 0;
+}
+
+div#optionContainer{
+    margin-top: -1rem;
+    &.hide {
+        display: none !important;
+    }
 }
 
 div.inputarea {
@@ -131,3 +141,10 @@ div.notice {
         color: #300;
     }
 }
+
+p.copylight{
+    color: #122;
+    text-align: end;
+    margin: .5rem 1rem;
+}
+

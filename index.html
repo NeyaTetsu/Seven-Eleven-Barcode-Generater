@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>SEVEN-ELEVEN BARCODE GENERATER</title>
+    <title>セブン-イレブン 払込バーコード 一括生成ツール</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,6 +17,13 @@
     <div class="split"></div>
 
     <div id="tableContainer"><table></table></div>
+
+    <div id="optionContainer" class="hide">
+        <div class="inputarea">
+            <button id="saveNotes" onclick="saveNotes()">メモデータを保存</button>
+        </div>
+        <div class="split"></div>
+    </div>
 
     <div class="inputarea">
         <textarea id="inputText" rows="8" placeholder="払込番号を入力 &#13;※改行で複数入力が可能"></textarea>
@@ -41,11 +48,12 @@
     <div class="block">
         <h2>ご注意</h2>
         <ul type="square">
-            <li>メモの保存機能はありません。<br>※将来的な実装も計画していますが、実装時期は未定です</li>
+            <li>保存機能は開発途上です。<br>データが吹き飛ぶ可能性をご理解のうえ、ご利用ください。</li>
             <li>非公式ツールの為、正常に利用できない場合がございます。</li>
             <li>バーコードを読み取れない場合は、バーコード下部の番号を従業員にお伝えください。</li>
         </ul>
     </div>
+    <p class="copylight">&copy; ねや 2025</p>
     <script src="script.js"></script>
 </body>
 </html>
